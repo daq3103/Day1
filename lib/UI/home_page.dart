@@ -1,5 +1,9 @@
-import 'package:day1/widget/jobcontent.dart';
-import 'package:day1/widget/popular.dart';
+import 'package:day1/widget/bottomNavigater.dart';
+import 'package:day1/widget/home_page/image_user.dart';
+import 'package:day1/widget/home_page/listofjob.dart';
+import 'package:day1/widget/home_page/lookingforjob.dart';
+import 'package:day1/widget/home_page/popular.dart';
+import 'package:day1/widget/search.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,96 +12,95 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(left: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 67),
-              child: Row(
-                children: [
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: const BoxDecoration(shape: BoxShape.circle),
-                    child: ElevatedButton(
-                        style: const ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll(Color(0xFFD9D9D9)),
-                        ),
-                        onPressed: () {},
-                        child: const Center(child: Icon(Icons.image_rounded))),
-                  ),
-                  const SizedBox(width: 12),
-                  const Text('User Name',
-                      style: TextStyle(
-                        color: Color.fromRGBO(0, 0, 0, 0.7),
-                      ))
-                ],
-              ),
-            ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.only(right: 24),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Color.fromRGBO(217, 217, 217, 1),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    labelText: 'Search',
-                    labelStyle: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromRGBO(124, 124, 124, 1),
-                        letterSpacing: -0.015),
-                    prefixIcon: Icon(Icons.search),
-                    prefixIconColor: Color.fromRGBO(124, 124, 124, 1),
-                    suffixIconColor: Color.fromRGBO(0, 0, 0, 1),
-                    suffixIcon: Icon(Icons.mic_rounded)),
-              ),
-            ),
-            const SizedBox(height: 24),
-            const Padding(
-              padding: EdgeInsets.only(right: 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Looking For',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                    'more',
+      resizeToAvoidBottomInset: false,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 50, left: 24),
+            child: Row(
+              children: [
+                ImageUser(),
+                SizedBox(width: 12),
+                Text('User Name',
                     style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: -0.015),
-                  )
-                ],
-              ),
+                      color: Color.fromRGBO(0, 0, 0, 0.7),
+                    ))
+              ],
             ),
-            const SizedBox(height: 12),
-            const Padding(
-              padding: EdgeInsets.only(right: 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ),
+          const SizedBox(height: 12),
+          const Padding(
+              padding: EdgeInsets.only(right: 24, left: 24), child: Search()),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  JobContainer(),
-                  JobContainer(),
-                  JobContainer(),
-                  JobContainer()
+                  const SizedBox(height: 24),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 24, left: 24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Looking For',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          'more',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: -0.015),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  // phần looking for
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: List.generate(4, (index) => const JobContainer()),
+                  ),
+
+                  const SizedBox(height: 12),
+                  const Padding(
+                    padding: EdgeInsets.all(24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Popular',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w600),
+                        ),
+                        Popular(),
+                        SizedBox(height: 12),
+                        Text('List of Doctors',
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.w600)),
+                        SizedBox(height: 12),
+                      ],
+                    ),
+                  ),
+                  // phần popular
+
+                  Padding(
+                    padding: const EdgeInsets.only(right: 24, left: 24),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          color: Color.fromRGBO(217, 217, 217, 1)),
+                      child: const ListOfJob(),
+                    ),
+                  ),
                 ],
               ),
             ),
-            const SizedBox(height: 12),
-            const Text(
-              'Popular',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-            ),
-            Popular()
-          ],
-        ),
+          ),
+          const BottomView(),
+        ],
       ),
     );
   }
